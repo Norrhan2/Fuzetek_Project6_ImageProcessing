@@ -39,6 +39,8 @@ public:
     int getHeight() const { return height; }
     int getChannels() const { return channels; }
 
+
+
     // Set number of channels
     void setChannels(int ch)
     {
@@ -362,7 +364,14 @@ Image rotate90(const Image &input)
     // TODO: Implement this function
     // For each pixel and each channel:
     //   output(x, height-1-y, c) = input(y, x, c)
-
+    for (int h = 0; h < height; h++)
+    {
+        for (int w =0; w < width; w++)
+        {
+            for (int chan = 0; chan < channels; chan++)
+                output(w, height - 1 - h, chan) = input(h, w, chan);
+        }
+    }
     return output;
 }
 
