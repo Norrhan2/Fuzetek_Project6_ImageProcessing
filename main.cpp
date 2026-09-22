@@ -261,10 +261,30 @@ Image adjustBrightness(const Image &input, int value)
     int channels = input.getChannels();
     Image output(width, height, channels);
 
-    // TODO: Implement this function
-    // For each pixel and each channel:
-    //   new_value = input(y, x, c) + value
-    //   output(y, x, c) = max(0, min(255, new_value))
+    // Loop through interior pixels (avoiding borders)
+    for (int y = 1; y < height - 1; y++)
+    {
+        for (int x = 1; x < width - 1; x++)
+        {
+            // For each color channel
+            for (int c = 0; c < channels; c++)
+            {
+                int sum = 0;
+                
+                // Sum the 3x3 neighborhood
+                for (int ky = -1; ky <= 1; ky++)
+                {
+                    for (int kx = -1; kx <= 1; kx++)
+                    {
+                        sum += input(y + ky, x + kx, c);
+                    }
+                }
+                
+                // Average the sum (9 pixels)
+                output(y, x, c) = sum / 9;
+            }
+        }
+    }
 
     return output;
 }
@@ -290,13 +310,13 @@ Image adjustBrightness(const Image &input, int value)
 
 Image adjustContrast(const Image &input, float factor)
 {
-    main
+    //main
     int height = input.getHeight();
     int width = input.getWidth();
     int channels = input.getChannels();
     Image output(width, height, channels);
 
- feature/adjustContrast
+ //feature/adjustContrast
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
             for (int c = 0; c < channels; ++c) {
@@ -328,12 +348,30 @@ Image applyBlur(const Image &input)
     int channels = input.getChannels();
     Image output(width, height, channels);
 
-    // TODO: Implement this function
-    // For each pixel (from y=1 to height-2, x=1 to width-2) and each channel:
-    //   sum = 0
-    //   For each neighbor (ky from -1 to 1, kx from -1 to 1):
-    //     sum += input(y+ky, x+kx, c)
-    //   output(y, x, c) = sum / 9
+    // Loop through interior pixels (avoiding borders)
+    for (int y = 1; y < height - 1; y++)
+    {
+        for (int x = 1; x < width - 1; x++)
+        {
+            // For each color channel
+            for (int c = 0; c < channels; c++)
+            {
+                int sum = 0;
+                
+                // Sum the 3x3 neighborhood
+                for (int ky = -1; ky <= 1; ky++)
+                {
+                    for (int kx = -1; kx <= 1; kx++)
+                    {
+                        sum += input(y + ky, x + kx, c);
+                    }
+                }
+                
+                // Average the sum (9 pixels)
+                output(y, x, c) = sum / 9;
+            }
+        }
+    }
 
     return output;
 }
